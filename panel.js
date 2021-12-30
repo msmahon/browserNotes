@@ -74,18 +74,13 @@ saveButton.addEventListener('click', (event) => {
 
     if (idInput.value) {
         // UPDATE
-        console.log('updating');
         chrome.runtime.sendMessage({action: 'update', note: newNote}, () => {
             refreshNotesList();
-            // fetchedNotes.push(new Note(newNote.id, newNote.title, newNote.content));
-            // renderNotesList();
         });
     } else {
-        // Create
+        // CREATE
         chrome.runtime.sendMessage({action: 'create', note: newNote}, () => {
             refreshNotesList();
-            // fetchedNotes.push(new Note(newNote.id, newNote.title, newNote.content));
-            // renderNotesList();
         });
     }
     clearForm();
