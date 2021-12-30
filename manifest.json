@@ -10,17 +10,17 @@
     "action": {
         "default_popup": "panel.html",
         "default_icon": {
-          "16": "/images/get_started16.png",
-          "32": "/images/get_started32.png",
-          "48": "/images/get_started48.png",
-          "128": "/images/get_started128.png"
+          "16": "/images/browser_notes16.png",
+          "32": "/images/browser_notes32.png",
+          "48": "/images/browser_notes48.png",
+          "128": "/images/browser_notes128.png"
         }
     },
     "icons": {
-        "16": "/images/get_started16.png",
-        "32": "/images/get_started32.png",
-        "48": "/images/get_started48.png",
-        "128": "/images/get_started128.png"
+        "16": "/images/browser_notes16.png",
+        "32": "/images/browser_notes32.png",
+        "48": "/images/browser_notes48.png",
+        "128": "/images/browser_notes128.png"
     },
     "options_page": "options.html"
 }
