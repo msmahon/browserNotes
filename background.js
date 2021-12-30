@@ -6,15 +6,41 @@ async function getAllKeys() {
 
 }
 
+// Set icon badge count
+async function setBadge(noteCount) {
+    let queryOptions = { active: true, lastFocusedWindow: true };
+    let [tab] = await chrome.tabs.query(queryOptions);
+    chrome.action.setBadgeBackgroundColor({ color: 'red' });
+    chrome.action.setBadgeText({ tabId: tab.id, text: `${noteCount}` });
+}
+
+// Set badge count on page load
+chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
+    if (changeInfo.status == 'complete') {
+        let notes = await getPageNotes();
+        setBadge(notes.length);
+    }
+})
+
+// Update badge count on storage change event
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+    for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
+        // newValue is not provided when site data is deleted
+        if (newValue === undefined) {
+            setBadge(0);
+            return;
+        }
+        setBadge(newValue.length);
+    }
+});
+
 async function getPageNotes(id = null) {
     // This is the first function to run on page load so it
     // sets the pagekey which is used by the rest of the application.
-    console.log(id);
     let url = await getCurrentUrl();
     pageKey = `browserNotes:${url}`;
     let allNotes = await chrome.storage.local.get(pageKey);
     if (id) {
-        console.log('test', allNotes[pageKey].filter(note => note.id == id));
         return allNotes[pageKey].filter(note => note.id == id)[0];
     }
     return allNotes[pageKey] || [];
@@ -25,11 +51,11 @@ async function createNote(note) {
     let updatedNotes = [...allNotes, note];
     try {
         await chrome.storage.local.set({ [pageKey]: updatedNotes });
+        return true;
     } catch (error) {
         console.error(error);
         return false;
     }
-    return true;
 }
 
 async function updateNote(note) {
@@ -51,11 +77,11 @@ async function updateNote(note) {
     allNotes[index].content = note.content;
     try {
         await chrome.storage.local.set({ [pageKey]: allNotes });
+        return true;
     } catch (error) {
         console.error(error);
         return false;
     }
-    return true;
 }
 
 async function deleteNote(id) {
@@ -63,11 +89,11 @@ async function deleteNote(id) {
     let updatedNotes = allNotes.filter(note => note.id != id);
     try {
         await chrome.storage.local.set({ [pageKey]: updatedNotes });
+        return true;
     } catch (error) {
         console.error(error);
         return false;
     }
-    return true;
 }
 
 async function getCurrentUrl() {
@@ -76,7 +102,7 @@ async function getCurrentUrl() {
     return tab.url;
 }
 
-async function getData() {
+async function getSiteKeys() {
     let items = await chrome.storage.local.get(null);
     return Object.keys(items);
 }
@@ -125,8 +151,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
 
-    if (message.action === 'get all notes') {
-        getData().then(sendResponse);
+    if (message.action === 'get all site keys') {
+        getSiteKeys().then(sendResponse);
         return true;
     }
 

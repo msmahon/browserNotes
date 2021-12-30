@@ -1,40 +1,36 @@
-const deleteButton = document.getElementById('delete-all-data');
+const deleteAllDataButton = document.getElementById('delete-all-data');
 const siteDeleteButtons = document.getElementsByClassName('delete-site-data')
 const siteList = document.getElementById('site-list');
 
 let allSites = [];
 
-deleteButton.addEventListener('click', (event) => {
-    console.log('sending message');
-    chrome.runtime.sendMessage({action: 'get all notes'}, response => {
-        console.log(response)
+// Delete all site data
+deleteAllDataButton.addEventListener('click', () => {
+    chrome.runtime.sendMessage({action: 'get all site keys'}, response => {
+        if (response.length) {
+            response.forEach(site => deleteSiteData(site));
+        }
     });
 });
 
-function getSiteData() {
-    let allSites = [];
-    chrome.runtime.sendMessage({action: 'get all notes'}, response => {
-        allSites = response;
-    });
-}
-
-function deleteSite(key) {
-    let button = document.querySelector(`#${key} button`);
-    button.classList.add('is-loading');
-    chrome.runtime.sendMessage({action: 'delete site', key: key}, response => {
+// Delete individual site data
+async function deleteSiteData(key) {
+    chrome.runtime.sendMessage({action: 'delete site data', key: key}, response => {
         if (response) {
             renderNotesList();
+            return true;
+        } else {
+            console.error('Failed to delete site data');
+            return false;
         }
     });
 }
 
 function renderNotesList() {
     let allSites = [];
-    chrome.runtime.sendMessage({action: 'get all notes'}, response => {
-        allSites = response;
-
+    chrome.runtime.sendMessage({action: 'get all site keys'}, siteKeys => {
         siteList.innerHTML = '';
-        allSites.forEach(site => {
+        siteKeys.forEach(site => {
             let siteDiv = `
                 <div class="mb-2" id="${site}">
                     <button class="button is-danger is-delete is-small delete-site-data" aria-label="delete">DELETE</button>
@@ -45,7 +41,7 @@ function renderNotesList() {
         });
 
         Array.from(siteDeleteButtons).forEach(node => {
-            node.addEventListener('click', () => deleteSite(node.parentElement.id));
+            node.addEventListener('click', event => deleteSiteData(node.parentElement.id));
         });
     });
 }
