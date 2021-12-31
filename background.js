@@ -2,16 +2,13 @@
 var pageNotes = [];
 var pageKey;
 
-async function getAllKeys() {
-
-}
-
 // Set icon badge count
 async function setBadge(noteCount) {
     let queryOptions = { active: true, lastFocusedWindow: true };
     let [tab] = await chrome.tabs.query(queryOptions);
-    chrome.action.setBadgeBackgroundColor({ color: 'red' });
-    chrome.action.setBadgeText({ tabId: tab.id, text: `${noteCount}` });
+    let badgeText = noteCount ? `${noteCount}` : '';
+    chrome.action.setBadgeBackgroundColor({ color: '#279AF1' });
+    chrome.action.setBadgeText({ tabId: tab.id, text: badgeText });
 }
 
 // Set badge count on page load
