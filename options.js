@@ -27,7 +27,6 @@ async function deleteSiteData(key) {
 }
 
 function renderNotesList() {
-    let allSites = [];
     chrome.runtime.sendMessage({action: 'get all site keys'}, siteKeys => {
         siteList.innerHTML = '';
         siteKeys.forEach(site => {

@@ -1,5 +1,3 @@
-import Note from './modules/note.mjs';
-
 const saveButton = document.getElementById('save-note');
 const clearButton = document.getElementById('clear-form');
 const noteList = document.getElementById('note-list');
@@ -59,7 +57,7 @@ function refreshNotesList() {
     fetchedNotes = [];
     chrome.runtime.sendMessage({action: 'get'}, notes => {
         notes.forEach(note => {
-            fetchedNotes.push(new Note(note.id, note.title, note.content));
+            fetchedNotes.push(note);
         });
         renderNotesList();
     });
