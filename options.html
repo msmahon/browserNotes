@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="css/bulma.min.css">
-    </head>
-    <body class="pt-1 pb-1 has-background-primary" style="position: absolute; height: 100%; width: 100%;">
-        <div id="main" class="card m-3">
-            <header class="card-header">
-                <p class="card-header-title has-text-primary-dark">BrowserNotes</p>
-            </header>
-            <div class="card-content">
-                <div class="content">
-                    <h3>Delete all saved data</h3>
-                    <button id="delete-all-data" class="button is-danger">DELETE</button>
+  <head>
+    <link rel="stylesheet" href="css/bulma.min.css" />
+  </head>
+  <body
+    class="pt-1 pb-1 has-background-primary"
+    style="position: absolute; height: 100%; width: 100%"
+  >
+    <div id="main" class="card m-3">
+      <header class="card-header">
+        <p class="card-header-title has-text-primary-dark">BrowserNotes</p>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <h3>Delete all saved data</h3>
+          <button id="delete-all-data" class="button is-danger">DELETE</button>
 
-                    <h3>Sites storing notes</h3>
-                    <div id="site-list"></div>
-                </div>
-            </div>
+          <h3>Sites storing notes</h3>
+          <div id="site-list"></div>
         </div>
-        <script type="module" src="options.js"></script>
-    </body>
+      </div>
+    </div>
+    <script type="module" src="options.js"></script>
+  </body>
 </html>

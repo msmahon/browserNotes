@@ -1,27 +1,26 @@
 {
-    "name": "BrowserNotes",
-    "description": "Save notes on individual web pages",
-    "version": "1.0",
-    "manifest_version": 3,
-    "background": {
-        "service_worker": "background.js"
-    },
-    "permissions": ["tabs", "storage"],
-    "action": {
-        "default_popup": "panel.html",
-        "default_icon": {
-          "16": "/images/browser_notes16.png",
-          "32": "/images/browser_notes32.png",
-          "48": "/images/browser_notes48.png",
-          "128": "/images/browser_notes128.png"
-        }
-    },
-    "icons": {
-        "16": "/images/browser_notes16.png",
-        "32": "/images/browser_notes32.png",
-        "48": "/images/browser_notes48.png",
-        "128": "/images/browser_notes128.png"
-    },
-    "options_page": "options.html"
+  "name": "BrowserNotes",
+  "description": "Save notes on individual web pages",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "storage"],
+  "action": {
+    "default_popup": "panel.html",
+    "default_icon": {
+      "16": "/images/browser_notes16.png",
+      "32": "/images/browser_notes32.png",
+      "48": "/images/browser_notes48.png",
+      "128": "/images/browser_notes128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/browser_notes16.png",
+    "32": "/images/browser_notes32.png",
+    "48": "/images/browser_notes48.png",
+    "128": "/images/browser_notes128.png"
+  },
+  "options_page": "options.html"
 }
-

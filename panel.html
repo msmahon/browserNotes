@@ -1,41 +1,56 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="css/bulma.min.css">
-        <link rel="stylesheet" href="css/bulma-divider.css">
-    </head>
-    <body class="pt-1 pb-1 has-background-primary">
-        <div id="main" class="card m-3">
-            <header class="card-header">
-                <p class="card-header-title has-text-primary-dark">BrowserNotes</p>
-            </header>
-            <div class="card-content">
-                <div class="content">
-                    <div id="note-form mb-2">
-                        <input type="hidden" id="note-id">
-                        <div class="field">
-                            <label class="label is-size-7">Title</label>
-                            <div class="control">
-                                <input id="note-title" class="input is-small" type="text">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label is-size-7">Note</label>
-                            <div class="control">
-                                <textarea id='note-content' class="textarea is-small"></textarea>
-                            </div>
-                        </div>
-                        <button id="save-note" class="is-outlined button is-size-7" type="submit">Save</button>
-                        <button id="clear-form" class="is-outlined button is-size-7" type="submit">Clear</button>
-                    </div>
-
-                    <div class="divider">Notes</div>
-
-                    <div id="note-list"></div>
-                </div>
+  <head>
+    <link rel="stylesheet" href="css/bulma.min.css" />
+    <link rel="stylesheet" href="css/bulma-divider.css" />
+  </head>
+  <body class="pt-1 pb-1 has-background-primary">
+    <div id="main" class="card m-3">
+      <header class="card-header">
+        <p class="card-header-title has-text-primary-dark">BrowserNotes</p>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <div id="note-form mb-2">
+            <input type="hidden" id="note-id" />
+            <div class="field">
+              <label class="label is-size-7">Title</label>
+              <div class="control">
+                <input id="note-title" class="input is-small" type="text" />
+              </div>
             </div>
-        </div>
-        <script type="module" src="panel.js"></script>
-    </body>
-</html>
+            <div class="field">
+              <label class="label is-size-7">Note</label>
+              <div class="control">
+                <textarea
+                  id="note-content"
+                  class="textarea is-small"
+                ></textarea>
+              </div>
+            </div>
+            <button
+              id="save-note"
+              class="is-outlined button is-size-7"
+              type="submit"
+            >
+              Save
+            </button>
+            <button
+              id="clear-form"
+              class="is-outlined button is-size-7"
+              type="submit"
+            >
+              Clear
+            </button>
+          </div>
 
+          <div id="note-list-container">
+            <div class="divider">Notes</div>
+            <div id="note-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="panel.js"></script>
+  </body>
+</html>
