@@ -40,7 +40,7 @@ async function getPageNotes(id = null) {
   if (id) {
     return allNotes[pageKey].filter((note) => note.id == id)[0];
   }
-  return allNotes[pageKey] || [];
+  return allNotes[pageKey] ?? [];
 }
 
 async function createNote(note) {
@@ -94,9 +94,12 @@ async function deleteNote(id) {
 }
 
 async function getCurrentUrl() {
-  let queryOptions = { active: true, lastFocusedWindow: true };
-  let [tab] = await chrome.tabs.query(queryOptions);
-  return tab.url;
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    lastFocusedWindow: true,
+  });
+  const url = new URL(tab.url);
+  return url.origin + url.pathname;
 }
 
 async function getSiteKeys() {
