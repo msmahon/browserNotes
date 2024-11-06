@@ -14,6 +14,11 @@ var fetchedNotes = [];
 
 // Fetch and display current notes
 function renderNotesList() {
+  if (fetchedNotes.length === 0) {
+    noteListContainer.classList.add("is-hidden");
+  } else {
+    noteListContainer.classList.remove("is-hidden");
+  }
   noteList.innerHTML = "";
   fetchedNotes.forEach((note) => {
     let noteDiv = `
