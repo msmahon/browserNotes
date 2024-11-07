@@ -2,11 +2,6 @@ const deleteAllDataButton = document.getElementById("delete-all-data");
 const siteDeleteButtons = document.getElementsByClassName("delete-site-data");
 const siteList = document.getElementById("site-list");
 
-// color selectors
-const colorButtons = document.getElementsByClassName("color-button");
-
-let allSites = [];
-
 // Delete all site data
 deleteAllDataButton.addEventListener("click", () => {
   chrome.runtime.sendMessage({ action: "get all site keys" }, (response) => {
@@ -16,7 +11,7 @@ deleteAllDataButton.addEventListener("click", () => {
   });
 });
 
-for (let button of colorButtons) {
+for (let button of document.getElementsByClassName("color-button")) {
   button.addEventListener("click", () => {
     const color = button.getAttribute("data-color");
     chrome.storage.local.set({ options: { color } });
@@ -24,6 +19,7 @@ for (let button of colorButtons) {
       action: "color changed",
       color,
     });
+    setColor(color);
   });
 }
 
@@ -62,6 +58,33 @@ function renderNotesList() {
       );
     });
   });
+}
+
+function setColor(color = "green") {
+  setBodyColor(color);
+  setHeaderColor(color);
+}
+
+function setBodyColor(color) {
+  const colorMap = {
+    green: "has-background-success",
+    red: "has-background-danger",
+    blue: "has-background-info",
+  };
+  document.body.classList.remove(...Object.values(colorMap));
+  document.body.classList.add(colorMap[color]);
+}
+
+function setHeaderColor(color) {
+  const colorMap = {
+    green: "has-text-success-dark",
+    red: "has-text-danger-dark",
+    blue: "has-text-info-dark",
+  };
+  document
+    .getElementById("header")
+    .classList.remove(...Object.values(colorMap));
+  document.getElementById("header").classList.add(colorMap[color]);
 }
 
 renderNotesList();

@@ -120,7 +120,7 @@ function setBodyColor(color) {
     red: "has-background-danger",
     blue: "has-background-info",
   };
-  document.body.classList.remove(Object.values(colorMap));
+  document.body.classList.remove(...Object.values(colorMap));
   document.body.classList.add(colorMap[color]);
 }
 
@@ -130,7 +130,9 @@ function setHeaderColor(color) {
     red: "has-text-danger-dark",
     blue: "has-text-info-dark",
   };
-  document.getElementById("header").classList.remove(Object.values(colorMap));
+  document
+    .getElementById("header")
+    .classList.remove(...Object.values(colorMap));
   document.getElementById("header").classList.add(colorMap[color]);
 }
 
