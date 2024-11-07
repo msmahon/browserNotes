@@ -2,6 +2,9 @@ const deleteAllDataButton = document.getElementById("delete-all-data");
 const siteDeleteButtons = document.getElementsByClassName("delete-site-data");
 const siteList = document.getElementById("site-list");
 
+// color selectors
+const colorButtons = document.getElementsByClassName("color-button");
+
 let allSites = [];
 
 // Delete all site data
@@ -12,6 +15,17 @@ deleteAllDataButton.addEventListener("click", () => {
     }
   });
 });
+
+for (let button of colorButtons) {
+  button.addEventListener("click", () => {
+    const color = button.getAttribute("data-color");
+    chrome.storage.local.set({ options: { color } });
+    chrome.runtime.sendMessage({
+      action: "color changed",
+      color,
+    });
+  });
+}
 
 // Delete individual site data
 async function deleteSiteData(key) {

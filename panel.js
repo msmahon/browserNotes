@@ -12,6 +12,12 @@ const editButtons = document.getElementsByClassName("edit-button");
 
 var fetchedNotes = [];
 
+async function initialize() {
+  const storageData = await chrome.storage.local.get(["options"]);
+  setColor(storageData.options?.color);
+  refreshNotesList();
+}
+
 // Fetch and display current notes
 function renderNotesList() {
   if (fetchedNotes.length === 0) {
@@ -103,4 +109,42 @@ function clearForm() {
   titleInput.focus();
 }
 
-refreshNotesList();
+function setColor(color = "green") {
+  setBodyColor(color);
+  setHeaderColor(color);
+}
+
+function setBodyColor(color) {
+  const colorMap = {
+    green: "has-background-success",
+    red: "has-background-danger",
+    blue: "has-background-info",
+  };
+  document.body.classList.remove(Object.values(colorMap));
+  document.body.classList.add(colorMap[color]);
+}
+
+function setHeaderColor(color) {
+  const colorMap = {
+    green: "has-text-success-dark",
+    red: "has-text-danger-dark",
+    blue: "has-text-info-dark",
+  };
+  document.getElementById("header").classList.remove(Object.values(colorMap));
+  document.getElementById("header").classList.add(colorMap[color]);
+}
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log(request);
+  switch (request.action) {
+    case "color changed":
+      setColor(request.color);
+      break;
+
+    default:
+      break;
+  }
+  sendResponse();
+});
+
+initialize();
