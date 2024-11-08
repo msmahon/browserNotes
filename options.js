@@ -2,6 +2,12 @@ const deleteAllDataButton = document.getElementById("delete-all-data");
 const siteDeleteButtons = document.getElementsByClassName("delete-site-data");
 const siteList = document.getElementById("site-list");
 
+async function initialize() {
+  const storageData = await chrome.storage.local.get(["options"]);
+  setColor(storageData.options?.color);
+  renderNotesList();
+}
+
 // Delete all site data
 deleteAllDataButton.addEventListener("click", () => {
   chrome.runtime.sendMessage({ action: "get all site keys" }, (response) => {
@@ -41,16 +47,19 @@ async function deleteSiteData(key) {
 
 function renderNotesList() {
   chrome.runtime.sendMessage({ action: "get all site keys" }, (siteKeys) => {
-    siteList.innerHTML = "";
-    siteKeys.forEach((site) => {
-      let siteDiv = `
-          <div class="mb-2" id="${site}">
+    siteList.innerHTML = siteKeys.reduce((acc, cur) => {
+      if (cur === "options") return acc;
+      const href = cur.substr(13);
+      return (
+        acc +
+        `
+          <div class="mb-2" id="${href}">
             <button class="button is-danger is-delete is-small delete-site-data" aria-label="delete">DELETE</button>
-            <span>${site}</span>
+            <a href="${href}">${href}</a>
           </div>
-      `;
-      siteList.innerHTML = siteList.innerHTML + siteDiv;
-    });
+      `
+      );
+    }, "");
 
     Array.from(siteDeleteButtons).forEach((node) => {
       node.addEventListener("click", (event) =>
@@ -87,4 +96,4 @@ function setHeaderColor(color) {
   document.getElementById("header").classList.add(colorMap[color]);
 }
 
-renderNotesList();
+initialize();
